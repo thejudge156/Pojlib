@@ -131,7 +131,7 @@ public class JREUtils {
     public static void relocateLibPath(final Context ctx) {
         sNativeLibDir = ctx.getApplicationInfo().nativeLibraryDir;
 
-        LD_LIBRARY_PATH = ctx.getFilesDir() + "/runtimes/JRE-22/bin:" + ctx.getFilesDir() + "/runtimes/JRE-22/lib:" +
+        LD_LIBRARY_PATH =
                 "/system/lib64:/vendor/lib64:/vendor/lib64/hw:" +
                 sNativeLibDir;
     }
@@ -139,11 +139,10 @@ public class JREUtils {
     public static void setJavaEnvironment(Activity activity, MinecraftInstances.Instance instance) throws Throwable {
         Map<String, String> envMap = new ArrayMap<>();
         envMap.put("POJLIB_NATIVEDIR", activity.getApplicationInfo().nativeLibraryDir);
-        envMap.put("JAVA_HOME", activity.getFilesDir() + "/runtimes/JRE-22");
         envMap.put("HOME", instance.gameDir);
         envMap.put("TMPDIR", activity.getCacheDir().getAbsolutePath());
         envMap.put("VR_MODEL", API.model);
-        envMap.put("POJLIB_RENDERER", "regal");
+        envMap.put("POJLIB_RENDERER", "tinywrapper");
 
         envMap.put("LD_LIBRARY_PATH", LD_LIBRARY_PATH);
         envMap.put("PATH", activity.getFilesDir() + "/runtimes/JRE-22/bin:" + Os.getenv("PATH"));
@@ -166,10 +165,10 @@ public class JREUtils {
         }
 
         File serverFile = new File(activity.getFilesDir() + "/runtimes/JRE-22/lib/server/libjvm.so");
-        jvmLibraryPath = activity.getFilesDir() + "/runtimes/JRE-22/lib/" + (serverFile.exists() ? "server" : "client");
-        Log.d("DynamicLoader","Base LD_LIBRARY_PATH: "+LD_LIBRARY_PATH);
-        Log.d("DynamicLoader","Internal LD_LIBRARY_PATH: "+jvmLibraryPath+":"+LD_LIBRARY_PATH);
-        setLdLibraryPath(jvmLibraryPath+":"+LD_LIBRARY_PATH);
+        //jvmLibraryPath = activity.getFilesDir() + "/runtimes/JRE-22/lib/" + (serverFile.exists() ? "server" : "client");
+        Log.d("DynamicLoader","Base LD_LIBRARY_PATH: " + LD_LIBRARY_PATH);
+        Log.d("DynamicLoader","Internal LD_LIBRARY_PATH: " + LD_LIBRARY_PATH);
+        setLdLibraryPath(LD_LIBRARY_PATH);
     }
 
     public static int launchJavaVM(final Activity activity, final List<String> JVMArgs, MinecraftInstances.Instance instance) throws Throwable {
@@ -181,26 +180,26 @@ public class JREUtils {
 
         //Add automatically generated args
 
-        if (API.customRAMValue) {
-            userArgs.add("-Xms" + API.memoryValue + "M");
-            userArgs.add("-Xmx" + API.memoryValue + "M");
-        } else {
-            if (API.model.equals("Meta Quest Pro") || API.model.equals("Oculus Headset1")) {
-                userArgs.add("-Xms" + 2048 + "M");
-                userArgs.add("-Xmx" + 3072 + "M");
-            } else {
-                userArgs.add("-Xms" + 1024 + "M");
-                userArgs.add("-Xmx" + 2048 + "M");
-            }
-        }
+        // if (API.customRAMValue) {
+        //     userArgs.add("-Xms" + API.memoryValue + "M");
+        //     userArgs.add("-Xmx" + API.memoryValue + "M");
+        // } else {
+        //     if (API.model.equals("Meta Quest Pro") || API.model.equals("Oculus Headset1")) {
+        //         userArgs.add("-Xms" + 2048 + "M");
+        //         userArgs.add("-Xmx" + 3072 + "M");
+        //     } else {
+        //         userArgs.add("-Xms" + 1024 + "M");
+        //         userArgs.add("-Xmx" + 2048 + "M");
+        //     }
+        // }
 
-        userArgs.add("-XX:+UseZGC");
-        userArgs.add("-XX:+ZGenerational");
-        userArgs.add("-XX:+UnlockExperimentalVMOptions");
-        userArgs.add("-XX:+UseSignalChaining");
-        userArgs.add("-XX:+UnlockDiagnosticVMOptions");
-        userArgs.add("-XX:+DisableExplicitGC");
-        userArgs.add("-XX:+UseCriticalJavaThreadPriority");
+        // userArgs.add("-XX:+UseZGC");
+        // userArgs.add("-XX:+ZGenerational");
+        // userArgs.add("-XX:+UnlockExperimentalVMOptions");
+        // userArgs.add("-XX:+UseSignalChaining");
+        // userArgs.add("-XX:+UnlockDiagnosticVMOptions");
+        // userArgs.add("-XX:+DisableExplicitGC");
+        // userArgs.add("-XX:+UseCriticalJavaThreadPriority");
 
         userArgs.add("-Dorg.lwjgl.opengl.libname=" + graphicsLib);
         userArgs.add("-Dorg.lwjgl.opengles.libname=" + "/system/lib64/libGLESv3.so");
@@ -209,9 +208,9 @@ public class JREUtils {
         userArgs.addAll(JVMArgs);
         System.out.println(JVMArgs);
 
-        runtimeDir = activity.getFilesDir() + "/runtimes/JRE-22";
+        // runtimeDir = activity.getFilesDir() + "/runtimes/JRE-22";
 
-        initJavaRuntime();
+        // initJavaRuntime();
         chdir(instance.gameDir);
         userArgs.add(0,"java"); //argv[0] is the program name according to C standard.
 
@@ -228,8 +227,6 @@ public class JREUtils {
      */
     public static List<String> getJavaArgs(Context ctx, MinecraftInstances.Instance instance) {
         return new ArrayList<>(Arrays.asList(
-                "-Djava.home=" + new File(ctx.getFilesDir(), "runtimes/JRE-22"),
-                "-Djava.io.tmpdir=" + ctx.getCacheDir().getAbsolutePath(),
                 "-Duser.home=" + instance.gameDir,
                 "-Duser.language=" + System.getProperty("user.language"),
                 "-Dos.name=Linux",

@@ -8,14 +8,12 @@ import android.net.NetworkCapabilities;
 import com.google.gson.JsonObject;
 
 import pojlib.account.MinecraftAccount;
-import pojlib.account.Msa;
 import pojlib.util.Logger;
 import pojlib.util.json.MinecraftInstances;
 import pojlib.util.Constants;
 import pojlib.account.LoginHelper;
 
 import java.io.IOException;
-import java.util.Date;
 
 /**
  * This class is the only class used by the launcher to communicate and talk to pojlib. This keeps pojlib and launcher separate.
@@ -178,11 +176,6 @@ public class API {
      *                 or {@link API#load(MinecraftInstances, String)}
      */
     public static void launchInstance(Activity activity, MinecraftAccount account, MinecraftInstances.Instance instance) {
-        try {
-            UnityPlayerActivity.installLWJGL(activity);
-        } catch (IOException e) {
-            Logger.getInstance().appendToLog("WARN! LWJGL install failed, " + e);
-        }
         InstanceHandler.launchInstance(activity, account, instance);
     }
 

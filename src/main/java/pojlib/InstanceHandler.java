@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import pojlib.account.MinecraftAccount;
-import pojlib.account.Msa;
 import pojlib.install.FabricMeta;
 import pojlib.install.Installer;
 import pojlib.install.MinecraftMeta;
@@ -182,9 +181,9 @@ public class InstanceHandler {
                 String clientClasspath = Installer.installClient(minecraftVersionInfo, gameDir);
                 String minecraftClasspath = Installer.installLibraries(minecraftVersionInfo, gameDir);
                 String modLoaderClasspath = Installer.installLibraries(finalModLoaderVersionInfo, gameDir);
-                String lwjgl = UnityPlayerActivity.installLWJGL(activity);
+                // String lwjgl = MainActivity.installLWJGL(activity);
 
-                instance.classpath = clientClasspath + File.pathSeparator + minecraftClasspath + File.pathSeparator + modLoaderClasspath + File.pathSeparator + lwjgl;
+                instance.classpath = clientClasspath + File.pathSeparator + minecraftClasspath + File.pathSeparator + modLoaderClasspath + File.pathSeparator;
 
                 instance.assetsDir = Installer.installAssets(minecraftVersionInfo, gameDir, activity, instance);
             } catch (IOException e) {

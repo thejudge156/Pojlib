@@ -24,6 +24,7 @@ include $(BUILD_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_LDLIBS := -llog -landroid -lGLESv3 -lvulkan -lEGL
+LOCAL_SHARED_LIBRARIES := pojavexec
 LOCAL_MODULE := vloader
 LOCAL_SRC_FILES := \
             vloader.cpp
@@ -42,8 +43,15 @@ LOCAL_SRC_FILES := \
 include $(BUILD_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
+LOCAL_MODULE := minecraft_android
+LOCAL_SRC_FILES := \
+    minecraft_lib/libminecraft_android.so
+include $(PREBUILT_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
 LOCAL_MODULE := jrelauncher
-LOCAL_SHARED_LIBRARIES := pojavexec
+LOCAL_SHARED_LIBRARIES := minecraft_android pojavexec
+LOCAL_CFLAGS := -I$(LOCAL_PATH)/minecraft_lib
 LOCAL_LDLIBS := -llog -landroid
 LOCAL_SRC_FILES := \
     jre_launcher.c
