@@ -53,8 +53,6 @@ struct pojav_environ_s {
     JavaVM* dalvikJavaVMPtr;
     JNIEnv* dalvikJNIEnvPtr_ANDROID;
     jobject activity;
-    XrInstanceCreateInfoAndroidKHR *XRAndroidInstanceBinding;
-    XrGraphicsBindingOpenGLESAndroidKHR *XRAndroidGLESBinding;
     long showingWindow;
     bool isInputReady, isCursorEntered, isUseStackQueueCall, shouldUpdateMouse;
     int savedWidth, savedHeight;
