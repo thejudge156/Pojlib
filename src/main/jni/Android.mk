@@ -18,7 +18,6 @@ LOCAL_LDLIBS := -ldl -llog -landroid -lGLESv3 -lEGL
 # -lGLESv2
 LOCAL_MODULE := pojavexec
 # LOCAL_CFLAGS += -DDEBUG
-LOCAL_SHARED_LIBRARIES := openvr_api
 # -DGLES_TEST
 LOCAL_SRC_FILES := \
     egl_bridge.c \

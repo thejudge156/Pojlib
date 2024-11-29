@@ -94,12 +94,6 @@ public class UnityPlayerActivity extends ActivityGroup implements IUnityPlayerLi
             FileUtil.unzipArchiveFromAsset(this, "JRE-22.zip", this.getFilesDir() + "/runtimes/JRE-22");
         }
 
-        try {
-            installLWJGL(this);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
         updateWindowSize(this);
         GLOBAL_CLIPBOARD = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
 

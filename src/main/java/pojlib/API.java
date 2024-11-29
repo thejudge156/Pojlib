@@ -130,11 +130,11 @@ public class API {
     public static MinecraftInstances.Instance createNewInstance(Activity activity, MinecraftInstances instances, String instanceName, boolean useDefaultMods, String minecraftVersion, String imageURL) throws IOException {
 
         if(ignoreInstanceName) {
-            return InstanceHandler.create(activity, instances, instanceName, Constants.USER_HOME, useDefaultMods, minecraftVersion, InstanceHandler.ModLoader.Fabric, imageURL);
+            return InstanceHandler.create(activity, instances, instanceName, Constants.USER_HOME, useDefaultMods, minecraftVersion, "Fabric", imageURL);
         } else if (instanceName.contains("/") || instanceName.contains("!")) {
             throw new IOException("You cannot use special characters (!, /, ., etc) when creating instances.");
         } else {
-            return InstanceHandler.create(activity, instances, instanceName, Constants.USER_HOME, useDefaultMods, minecraftVersion, InstanceHandler.ModLoader.Fabric, imageURL);
+            return InstanceHandler.create(activity, instances, instanceName, Constants.USER_HOME, useDefaultMods, minecraftVersion, "Fabric", imageURL);
         }
     }
 
@@ -150,11 +150,11 @@ public class API {
     public static MinecraftInstances.Instance createNewInstance(Activity activity, MinecraftInstances instances, String instanceName, String imageURL, String mrpackFile) throws IOException {
 
         if(ignoreInstanceName) {
-            return InstanceHandler.create(activity, instances, instanceName, Constants.USER_HOME, InstanceHandler.ModLoader.Fabric, mrpackFile, imageURL);
+            return InstanceHandler.create(activity, instances, instanceName, Constants.USER_HOME, "Fabric", mrpackFile, imageURL);
         } else if (instanceName.contains("/") || instanceName.contains("!")) {
             throw new IOException("You cannot use special characters (!, /, ., etc) when creating instances.");
         } else {
-            return InstanceHandler.create(activity, instances, instanceName, Constants.USER_HOME, InstanceHandler.ModLoader.Fabric, mrpackFile, imageURL);
+            return InstanceHandler.create(activity, instances, instanceName, Constants.USER_HOME, "Fabric", mrpackFile, imageURL);
         }
     }
 
@@ -213,11 +213,10 @@ public class API {
             return;
         } else if(acc != null && acc.expiresIn <= System.currentTimeMillis()) {
             currentAcc = LoginHelper.getNewToken(activity);
-            if(currentAcc == null) {
-                LoginHelper.beginLogin(activity);
-            } else {
+            if(currentAcc != null) {
                 API.profileImage = MinecraftAccount.getSkinFaceUrl(API.currentAcc);
                 API.profileName = API.currentAcc.username;
+                return;
             }
         }
 
