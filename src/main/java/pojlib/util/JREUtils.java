@@ -299,7 +299,7 @@ public class JREUtils {
      * @return The name of the loaded library
      */
     public static String loadGraphicsLibrary(){
-        return "libtinywrapper.so";
+        return "libltw.so";
     }
 
     public static native long getEGLContextPtr();

@@ -13,10 +13,16 @@ LOCAL_SRC_FILES := libopenxr_loader.so
 include $(PREBUILT_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
+LOCAL_MODULE := ltw
+LOCAL_SRC_FILES := libltw.so
+include $(PREBUILT_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
 # Link GLESv2 for test
-LOCAL_LDLIBS := -ldl -llog -landroid -lGLESv3 -lEGL
+LOCAL_LDLIBS := -ldl -llog -landroid
 # -lGLESv2
 LOCAL_MODULE := pojavexec
+LOCAL_SHARED_LIBRARIES := ltw
 # LOCAL_CFLAGS += -DDEBUG
 # -DGLES_TEST
 LOCAL_SRC_FILES := \

@@ -43,15 +43,15 @@ public class Msa {
     }
 
     /* Fields used to fill the account  */
-    public static String mcName;
+    public String mcName;
     public String mcToken;
-    public static String mcUuid;
-    public static boolean doesOwnGame;
+    public String mcUuid;
+    public boolean doesOwnGame;
     public long expiresAt;
     private Activity activity;
 
     public Msa(Activity currentActivity) {
-        this.activity = activity;
+        this.activity = currentActivity;
     }
 
     /** Performs a full login, calling back listeners appropriately  */
@@ -199,7 +199,7 @@ public class Msa {
     }
 
     // Returns false for failure //
-    public static boolean checkMcProfile(String mcAccessToken) throws IOException, MSAException, JSONException {
+    public boolean checkMcProfile(String mcAccessToken) throws IOException, MSAException, JSONException {
         URL url = new URL(Constants.MC_PROFILE_URL);
 
         HttpURLConnection conn = (HttpURLConnection)url.openConnection();

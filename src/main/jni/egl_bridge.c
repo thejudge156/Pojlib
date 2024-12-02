@@ -66,7 +66,7 @@ void pojavTerminate() {
 }
 
 void dlsym_egl() {
-    void* handle = dlopen("libtinywrapper.so", RTLD_NOW);
+    void* handle = dlopen("libltw.so", RTLD_NOW);
     eglGetProcAddress_p = (eglGetProcAddress_t*) dlsym(handle, "eglGetProcAddress");
     eglGetDisplay_p = (eglGetDisplay_t*) eglGetProcAddress_p("eglGetDisplay");
     eglInitialize_p = (eglInitialize_t*) eglGetProcAddress_p("eglInitialize");
@@ -184,7 +184,7 @@ void pojavMakeCurrent(void* window) {
     xrEglContext = window;
 
     if (success == EGL_FALSE) {
-        printf("EGLBridge: Error: eglMakeCurrent() failed: %p\n", eglGetError());
+        printf("EGLBridge: Error: eglMakeCurrent() failed: %p\n", eglGetError_p());
     } else {
         printf("EGLBridge: eglMakeCurrent() succeed!\n");
     }

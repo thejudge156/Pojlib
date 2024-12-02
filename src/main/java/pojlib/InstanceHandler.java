@@ -249,7 +249,7 @@ public class InstanceHandler {
         }
 
         if(oldInfo != null) {
-            boolean isMod = oldInfo.type.equals("mod");
+            boolean isMod = !"resourcepack".equals(oldInfo.type);
 
             // Delete the mod
             File modFile = new File(instance.gameDir + (isMod ? "/mods/" : "/resourcepacks/") + name + (isMod ? ".jar" : ".zip"));

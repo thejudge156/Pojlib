@@ -166,8 +166,8 @@ public class MinecraftInstances {
                     }
                     manual = false;
                     File mod = new File(
-                            gameDir + (newMod.type.equals("mod") ? "/mods" : "/resourcepacks"),
-                            newMod.slug + (newMod.type.equals("resourcepack") ? ".zip" : ".jar")
+                            gameDir + ("resourcepack".equals(newMod.type) ? "/resourcepacks" : "/mods"),
+                            newMod.slug + ("resourcepack".equals(newMod.type) ? ".zip" : ".jar")
                     );
                     if(!mod.exists() || !extMod.version.equals(newMod.version)) {
                         DownloadUtils.downloadFile(newMod.download_link, mod);
@@ -193,8 +193,8 @@ public class MinecraftInstances {
         private void downloadAllMods(List<ProjectInfo> newMods) throws IOException {
             for(ProjectInfo newMod : newMods) {
                 File mod = new File(
-                        gameDir + (newMod.type.equals("mod") ? "/mods" : "/resourcepacks"),
-                        newMod.slug + (newMod.type.equals("resourcepack") ? ".zip" : ".jar")
+                        gameDir + ("resourcepack".equals(newMod.type) ? "/resourcepacks" : "/mods"),
+                        newMod.slug + ("resourcepack".equals(newMod.type) ? ".zip" : ".jar")
                 );
                 DownloadUtils.downloadFile(newMod.download_link, mod);
             }
